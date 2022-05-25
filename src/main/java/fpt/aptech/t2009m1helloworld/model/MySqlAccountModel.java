@@ -15,7 +15,7 @@ public abstract class MySqlAccountModel implements AccountModel{
     private static final String UPDATE_USER = "UPDATE users SET id = ?, username = ?, password = ?, status = ? WHERE id = ?;";
     private static final String DELETE_USER = "DELETE FROM users WHERE id = ?";
     private static final String FIND_BY_ID = "SELECT * FROM users WHERE id = ?";
-    private static final String FIND_BY_ALL = "SELECT * FROM users;";
+    private static final String FIND_ALL = "SELECT * FROM users;";
 
     @Override
     public boolean save(User user) {
@@ -88,7 +88,7 @@ public abstract class MySqlAccountModel implements AccountModel{
         List<User> users = new ArrayList<>();
         try {
             Connection connection = connectionHelper.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ALL);
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
