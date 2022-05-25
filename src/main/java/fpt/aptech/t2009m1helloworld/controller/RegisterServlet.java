@@ -1,6 +1,9 @@
 package fpt.aptech.t2009m1helloworld.controller;
 
 import fpt.aptech.t2009m1helloworld.entity.Account;
+import fpt.aptech.t2009m1helloworld.entity.User;
+import fpt.aptech.t2009m1helloworld.model.MySqlAccountModel;
+import javafx.scene.canvas.GraphicsContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegisterServlet extends HttpServlet {
+    private MySqlAccountModel mySqlAccountModel;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/user/register.jsp").forward(req, resp);
@@ -28,12 +32,14 @@ public class RegisterServlet extends HttpServlet {
         String phone = req.getParameter("phone");
         String birthday = req.getParameter("birthday");
         Account account = new Account();
+        User user = new User();
         account.setUsername(username);
         account.setPassword(password);
         account.setFullName(fullName);
         account.setEmail(email);
         account.setPhone(phone);
         account.setBirthday(birthday);
+        mySqlAccountModel.save(user);
         req.setAttribute("account", account);
         req.getRequestDispatcher("/user/register-success.jsp").forward(req, resp);
 
